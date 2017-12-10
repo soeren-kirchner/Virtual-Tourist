@@ -12,7 +12,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //self.navigationItem.title = NSLocalizedString("Virtual Tourist", comment: "Navbar Title - Virtual Tourist")
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem?.tintColor = .red
     }
 
     override func didReceiveMemoryWarning() {
