@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class TravelLocationsMapViewController: UIViewController {
 
     
     @IBOutlet weak var editButton: UIBarButtonItem!
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: MKMapViewDelegate {
+extension TravelLocationsMapViewController: MKMapViewDelegate {
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         print("map finished loading")
@@ -149,7 +149,7 @@ extension ViewController: MKMapViewDelegate {
     
 }
 
-extension ViewController: CLLocationManagerDelegate {
+extension TravelLocationsMapViewController: CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
