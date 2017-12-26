@@ -1,6 +1,18 @@
-/* Class = "UILabel"; text = "English"; ObjectID = "Lbd-Sm-Vht"; */
-"Lbd-Sm-Vht.text" = "תייר וירטואלי";
+/* Class = "UILabel"; text = "Dark Mode"; ObjectID = "L5f-jA-5cd"; */
+"L5f-jA-5cd.text" = "מצב כהה";
+
+/* Class = "UITableViewSection"; headerTitle = "Theme"; ObjectID = "OmX-Qs-ZKN"; */
+"OmX-Qs-ZKN.headerTitle" = "נושא";
+
+/* Class = "UITableViewController"; title = "Language"; ObjectID = "Szg-p8-5i8"; */
+"Szg-p8-5i8.title" = "שפה";
 
 /* Class = "UINavigationItem"; title = "Virtual Tourist"; ObjectID = "fuj-5w-eag"; */
 "fuj-5w-eag.title" = "תייר וירטואלי";
+
+/* Class = "UITableViewController"; title = "Settings"; ObjectID = "goc-Vj-fRh"; */
+"goc-Vj-fRh.title" = "הגדרות";
+
+/* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "oRc-pf-yl0"; */
+"oRc-pf-yl0.headerTitle" = "שפה";
 

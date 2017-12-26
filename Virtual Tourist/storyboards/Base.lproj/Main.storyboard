@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +18,41 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="SWb-wx-dle">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTM-Jz-APs">
+                                <rect key="frame" x="0.0" y="673" width="375" height="50"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Z88-mV-JwQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap Pins to delete them" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhn-0j-5vV">
+                                            <rect key="frame" x="0.0" y="14" width="375" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="o96-xe-iQi"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="SWb-wx-dle" secondAttribute="bottom" id="6iZ-hm-yP7"/>
+                            <constraint firstItem="XTM-Jz-APs" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="B8Y-nY-kKf"/>
+                            <constraint firstItem="XTM-Jz-APs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ttx-Hz-hHc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XTM-Jz-APs" secondAttribute="bottom" constant="-100" id="Vtq-B0-M5u"/>
+                            <constraint firstItem="SWb-wx-dle" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aHf-cr-cha"/>
+                            <constraint firstItem="SWb-wx-dle" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dpV-sY-NKB"/>
+                            <constraint firstItem="SWb-wx-dle" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hq4-aU-snE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <toolbarItems/>
@@ -27,9 +62,18 @@
                                 <segue destination="goc-Vj-fRh" kind="show" id="7Zm-sA-1B4"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="kS7-2A-1Tk"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="kS7-2A-1Tk">
+                            <connections>
+                                <action selector="editMode:" destination="BYZ-38-t0r" id="pGC-eF-Lyh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="editButton" destination="kS7-2A-1Tk" id="AK2-5r-6x1"/>
+                        <outlet property="hintViewBottomConstraint" destination="Vtq-B0-M5u" id="u0f-Mz-Qus"/>
+                        <outlet property="mapView" destination="SWb-wx-dle" id="uYc-ND-7FM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -53,18 +97,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5f-jA-5cd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dark Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5f-jA-5cd">
                                                     <rect key="frame" x="16" y="11" width="84" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-bw-Yh1">
-                                                    <rect key="frame" x="310" y="6" width="49" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-bw-Yh1">
+                                                    <rect key="frame" x="308" y="6" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CKD-bw-Yh1" firstAttribute="centerY" secondItem="3z0-CU-1aS" secondAttribute="centerY" id="3bp-dC-esO"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="L5f-jA-5cd" secondAttribute="trailingMargin" id="559-LE-19C"/>
+                                                <constraint firstAttribute="trailing" secondItem="CKD-bw-Yh1" secondAttribute="trailing" constant="18" id="mWT-tx-CeI"/>
+                                                <constraint firstItem="L5f-jA-5cd" firstAttribute="centerY" secondItem="3z0-CU-1aS" secondAttribute="centerY" id="pKp-Us-0yY"/>
+                                                <constraint firstItem="L5f-jA-5cd" firstAttribute="leading" secondItem="3z0-CU-1aS" secondAttribute="leadingMargin" id="zj6-01-EpD"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -78,14 +127,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="English (System Default)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyL-3s-qhE">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English (System Default)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyL-3s-qhE">
                                                     <rect key="frame" x="16" y="12" width="188" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="oyL-3s-qhE" firstAttribute="centerY" secondItem="cA3-01-L2i" secondAttribute="centerY" id="GhB-EB-HCh"/>
+                                                <constraint firstItem="oyL-3s-qhE" firstAttribute="leading" secondItem="cA3-01-L2i" secondAttribute="leadingMargin" id="Qqz-XP-faK"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oyL-3s-qhE" secondAttribute="trailingMargin" id="Y5z-vS-QBi"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="Szg-p8-5i8" kind="show" identifier="ShowLanguageSettingsSegue" id="NDR-dc-9BF"/>
