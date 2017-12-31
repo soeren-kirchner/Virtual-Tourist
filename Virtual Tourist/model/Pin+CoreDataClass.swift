@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 @objc(Pin)
 public class Pin: NSManagedObject {
@@ -22,6 +23,10 @@ public class Pin: NSManagedObject {
         else {
             fatalError("unable to find entity")
         }
+    }
+    
+    convenience init(coordinates: CLLocationCoordinate2D, context: NSManagedObjectContext) {
+        self.init(longitude: coordinates.longitude, latitude: coordinates.latitude, context: context)
     }
     
 }

@@ -12,7 +12,7 @@ import CoreLocation
 
 class TravelLocationsMapViewController: UIViewController {
 
-    private var pins = [Pin] ()
+    //private var pins = [Pin] ()
     
     let stack = CoreDataStack.shared
     let flickrClient = FlickrClient.shared
@@ -71,24 +71,27 @@ class TravelLocationsMapViewController: UIViewController {
     @objc func addAnnotation(press:UILongPressGestureRecognizer) {
         if press.state == .began {
             //let location = press.location(in: mapView)
-            //let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
+            //let coordinates = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
             
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
+            let pin = Pin(coordinates: mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView), context: stack.context)
+            let annotation = VirtualTouristAnnotation(pin: pin)
+            
+            //let annotation = MKPointAnnotation()
+            //annotation.coordinate = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
             //annotation.title = "Title"
             
             
-            let pin = Pin(longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude, context: stack.context)
+            //let pin = Pin(longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude, context: stack.context)
             annotation.subtitle = String(pin.longitude) + " " + String(pin.latitude)
             
             
             flickrClient.getImpressions(forPin: pin) { (result, error) in
-               
+
                 guard error == nil else {
                     print("some error")
                     return
                 }
-                
+
                 do {
                     print("save context")
                     try self.stack.saveContext()
@@ -96,11 +99,14 @@ class TravelLocationsMapViewController: UIViewController {
                 catch {
                     print("error")
                 }
-                
-                
+
             }
             
-            pins.append(pin)
+            //pins.append(pin)
+            print("adding annontation")
+            print(annotation)
+            print(annotation.coordinate.longitude)
+            print(annotation.coordinate.latitude)
             mapView.addAnnotation(annotation)
         }
     }
@@ -125,7 +131,7 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             markerView = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: reusableMarkerIdentifier)
         }
         
-        markerView?.canShowCallout = true
+        //markerView?.canShowCallout = true
         markerView?.markerTintColor = .green
         markerView?.glyphImage = UIImage(named: "binoculars")
         markerView?.animatesWhenAdded = true
@@ -149,8 +155,7 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
 }
 
 extension TravelLocationsMapViewController: CLLocationManagerDelegate {
-    
-    
+        
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("didUpdateLocations")
         

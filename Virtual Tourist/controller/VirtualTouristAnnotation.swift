@@ -7,25 +7,17 @@
 //
 
 import Foundation
-import UIKit
 import MapKit
-import CoreLocation
 
 class VirtualTouristAnnotation: MKPointAnnotation {
     
-    var pin: Pin {
-        set {
-            super.coordinate.longitude = self.pin.longitude
-            super.coordinate.latitude = self.pin.latitude
-        }
-        get {
-            return self.pin
-        }
-    }
+    var pin: Pin
     
     init(pin: Pin) {
-        super.init()
         self.pin = pin
+        super.init()
+        coordinate.longitude = pin.longitude
+        coordinate.latitude = pin.latitude
     }
     
 }
