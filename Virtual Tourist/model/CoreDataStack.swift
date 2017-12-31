@@ -20,6 +20,8 @@ struct CoreDataStack {
     internal let dbURL: URL
     let context: NSManagedObjectContext
     
+    static let shared = CoreDataStack(modelName: "LocationsModel")!
+    
     // MARK: Initializers
     
     init?(modelName: String) {

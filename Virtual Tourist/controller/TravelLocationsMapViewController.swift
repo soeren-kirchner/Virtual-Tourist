@@ -12,6 +12,10 @@ import CoreLocation
 
 class TravelLocationsMapViewController: UIViewController {
 
+    private var pins = [Pin] ()
+    
+    let stack = CoreDataStack.shared
+    let flickrClient = FlickrClient.shared
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     
@@ -22,15 +26,12 @@ class TravelLocationsMapViewController: UIViewController {
     
     var editMode: Bool = false
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.navigationItem.title = NSLocalizedString("Virtual Tourist", comment: "Navbar Title - Virtual Tourist")
         navigationController?.navigationBar.prefersLargeTitles = true
         editButton.title = NSLocalizedString("edit", comment: "done - edit - button in navigation bar")
-
-        
-        
+  
         mapView.delegate = self
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(press:)))
@@ -75,8 +76,31 @@ class TravelLocationsMapViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.coordinate = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
             //annotation.title = "Title"
-            //annotation.subtitle = "Subtitle"
             
+            
+            let pin = Pin(longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude, context: stack.context)
+            annotation.subtitle = String(pin.longitude) + " " + String(pin.latitude)
+            
+            
+            flickrClient.getImpressions(forPin: pin) { (result, error) in
+               
+                guard error == nil else {
+                    print("some error")
+                    return
+                }
+                
+                do {
+                    print("save context")
+                    try self.stack.saveContext()
+                }
+                catch {
+                    print("error")
+                }
+                
+                
+            }
+            
+            pins.append(pin)
             mapView.addAnnotation(annotation)
         }
     }
@@ -109,31 +133,6 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         markerView?.annotation = annotation
 
         return markerView
-        
-//        if annotation is MKUserLocation {
-//            return nil
-//        }
-//
-//        let reusableMarkerIdentifier = "VirtualLocation"
-//        var markerView = mapView.dequeueReusableAnnotationView(withIdentifier: reusableMarkerIdentifier) as? MKMarkerAnnotationView
-//
-//        if markerView == nil {
-//            print("marker View was nil")
-//            markerView = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: reusableMarkerIdentifier)
-//            markerView?.canShowCallout = true
-//            markerView?.tintColor = .green
-//            markerView?.markerTintColor = .green
-//            markerView?.glyphImage = UIImage(named: "binoculars")
-//            markerView?.animatesWhenAdded = true
-//            markerView!.isDraggable = true
-//        }
-//        else {
-//            markerView!.annotation = annotation
-//        }
-//        markerView!.annotation = annotation
-//        print(markerView)
-//        return markerView
-        
         
     }
     
