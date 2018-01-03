@@ -114,9 +114,9 @@ class TravelLocationsMapViewController: UIViewController {
 
 extension TravelLocationsMapViewController: MKMapViewDelegate {
     
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        print("map finished loading")
-    }
+//    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+//        print("map finished loading")
+//    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -139,7 +139,6 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         markerView?.annotation = annotation
 
         return markerView
-        
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -149,6 +148,8 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         }
         else {
             print("show details")
+            //performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
+            performSegue(withIdentifier: "test4", sender: self)
         }
     }
     
