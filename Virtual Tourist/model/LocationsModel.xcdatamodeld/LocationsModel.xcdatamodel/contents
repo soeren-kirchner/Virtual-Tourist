@@ -11,7 +11,7 @@
         <relationship name="impressions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Impression" inverseName="pin" inverseEntity="Impression" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Impression" positionX="-54" positionY="9" width="128" height="90"/>
         <element name="Pin" positionX="270" positionY="9" width="128" height="88"/>
-        <element name="Impression" positionX="-54" positionY="9" width="128" height="88"/>
     </elements>
 </model>

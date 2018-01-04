@@ -18,6 +18,8 @@ class VirtualTouristAnnotation: MKPointAnnotation {
         super.init()
         coordinate.longitude = pin.longitude
         coordinate.latitude = pin.latitude
+        
+        
     }
     
 }

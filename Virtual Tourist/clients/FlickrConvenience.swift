@@ -56,8 +56,8 @@ extension FlickrClient {
                     return
                 }
                 print(imageUrl)
-                
-                let impression = Impression(url: URL(fileURLWithPath: imageUrl), context: self.stack.context)
+
+                let impression = Impression(url: URL(string: imageUrl)!, context: self.stack.context)
                 impression.pin = pin
                 //pin.impressions!.adding(impression)
                 
@@ -83,4 +83,18 @@ extension FlickrClient {
             completionHandler(results, nil)
         }
     }
+    
+    
+    func downloadImage(fromUrl url: URL, completionHandler: @escaping FlickrDefaultCompletionHandler) {
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
+            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
+                completionHandler(data as AnyObject, nil)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    
 }
