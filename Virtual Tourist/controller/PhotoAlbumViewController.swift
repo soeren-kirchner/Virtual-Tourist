@@ -23,6 +23,8 @@ class PhotoAlbumViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
+    var pin: Pin?
+    
     let stack = CoreDataStack.shared
     let flickrClient = FlickrClient.shared
     
@@ -30,14 +32,14 @@ class PhotoAlbumViewController: UIViewController {
 
         let fetchRequest: NSFetchRequest<Impression> = Impression.fetchRequest()
         fetchRequest.sortDescriptors = []
+        fetchRequest.predicate = NSPredicate(format: "pin = %@", argumentArray: [pin])
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
     }()
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,17 +47,7 @@ class PhotoAlbumViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        
-        
-        portraitCellDimension = (min(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
-        landscapeCellDimension = (max(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
-        
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        
-        setItemSize(for: view.frame.size)
-        
-        
+        initCollectionView()
         
         print(fetchedResultsController)
 
@@ -67,12 +59,17 @@ class PhotoAlbumViewController: UIViewController {
         
         print(fetchedResultsController)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    private func initCollectionView() {
+        portraitCellDimension = (min(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
+        landscapeCellDimension = (max(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
+        
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        
+        setItemSize(for: view.frame.size)
+    }
+
 }
 
 extension PhotoAlbumViewController: MKMapViewDelegate {

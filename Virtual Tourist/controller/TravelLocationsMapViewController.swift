@@ -24,6 +24,8 @@ class TravelLocationsMapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
+    var selectedPin: Pin?
+    
     var editMode: Bool = false
     
     override func viewDidLoad() {
@@ -92,6 +94,7 @@ class TravelLocationsMapViewController: UIViewController {
                     return
                 }
 
+                // TODO: to completion handler
                 do {
                     print("save context")
                     try self.stack.saveContext()
@@ -125,32 +128,30 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         }
         
         let reusableMarkerIdentifier = "VirtualLocation"
-        
-        var markerView = mapView.dequeueReusableAnnotationView(withIdentifier: reusableMarkerIdentifier) as? MKMarkerAnnotationView
+        var markerView = mapView.dequeueReusableAnnotationView(withIdentifier: reusableMarkerIdentifier) as? VirtualTouristAnnotationView
         if markerView == nil {
-            markerView = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: reusableMarkerIdentifier)
+            markerView = VirtualTouristAnnotationView(annotation: nil, reuseIdentifier: reusableMarkerIdentifier)
         }
-        
-        //markerView?.canShowCallout = true
-        markerView?.markerTintColor = .green
-        markerView?.glyphImage = UIImage(named: "binoculars")
-        markerView?.animatesWhenAdded = true
-        markerView?.isDraggable = true
-        markerView?.annotation = annotation
 
+        markerView?.annotation = annotation
         return markerView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let annotation = view.annotation
+        let annotation = view.annotation as! VirtualTouristAnnotation
         if (editMode) {
-            mapView.removeAnnotation(annotation!)
+            mapView.removeAnnotation(annotation)
         }
         else {
             print("show details")
-            //performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
-            performSegue(withIdentifier: "test4", sender: self)
+            selectedPin = annotation.pin
+            performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let photoAlbumViewController = segue.destination as! PhotoAlbumViewController
+        photoAlbumViewController.pin = selectedPin
     }
     
 }

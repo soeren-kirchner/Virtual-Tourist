@@ -78,7 +78,7 @@
                         <outlet property="editButton" destination="kS7-2A-1Tk" id="AK2-5r-6x1"/>
                         <outlet property="hintViewBottomConstraint" destination="Vtq-B0-M5u" id="u0f-Mz-Qus"/>
                         <outlet property="mapView" destination="SWb-wx-dle" id="uYc-ND-7FM"/>
-                        <segue destination="gR8-L2-Zmw" kind="show" identifier="test4" id="u9P-qo-a7X"/>
+                        <segue destination="gR8-L2-Zmw" kind="show" identifier="PhotoAlbumSegue" id="u9P-qo-a7X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
