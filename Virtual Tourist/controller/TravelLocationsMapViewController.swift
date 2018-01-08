@@ -138,14 +138,16 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let annotation = view.annotation as! VirtualTouristAnnotation
-        if (editMode) {
-            mapView.removeAnnotation(annotation)
-        }
-        else {
-            print("show details")
-            selectedPin = annotation.pin
-            performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
+        
+        if let annotation = view.annotation as? VirtualTouristAnnotation {
+            if (editMode) {
+                mapView.removeAnnotation(annotation)
+            }
+            else {
+                print("show details")
+                selectedPin = annotation.pin
+                performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
+            }
         }
     }
     
