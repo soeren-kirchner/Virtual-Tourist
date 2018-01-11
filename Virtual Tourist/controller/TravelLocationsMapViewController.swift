@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class TravelLocationsMapViewController: UIViewController {
 
@@ -27,6 +28,27 @@ class TravelLocationsMapViewController: UIViewController {
     var selectedPin: Pin?
     
     var editMode: Bool = false
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<Pin> = fetchResults()
+    
+    private func fetchResults() -> NSFetchedResultsController<Pin> {
+        print("fetchedResultsController: initializing my lazy self")
+        
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        fetchRequest.sortDescriptors = []
+        //fetchRequest.predicate = NSPredicate(format: "pin = %@", argumentArray: [pin!])
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        //fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("Fetching error: \(error), \(error.userInfo)")
+        }
+        
+        return fetchedResultsController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +70,24 @@ class TravelLocationsMapViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
+        
+        fetchStoredAnnotations()
  
 //        let userLocation = mapView.userLocation
 //        print(userLocation.location?.coordinate)
 //        let region = MKCoordinateRegionMakeWithDistance(userLocation.location!.coordinate, 100, 100)
 //        mapView.setRegion(region, animated: true)
         
+    }
+    
+    private func fetchStoredAnnotations() {
+        print("fetchStoredAnnotations:")
+        for pin in fetchedResultsController.fetchedObjects! {
+            print(pin)
+            let annontation = VirtualTouristAnnotation(pin: pin)
+            mapView.addAnnotation(annontation)
+            
+        }
     }
 
     @IBAction func editMode(_ sender: Any) {
@@ -72,20 +106,9 @@ class TravelLocationsMapViewController: UIViewController {
     
     @objc func addAnnotation(press:UILongPressGestureRecognizer) {
         if press.state == .began {
-            //let location = press.location(in: mapView)
-            //let coordinates = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
             
             let pin = Pin(coordinates: mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView), context: stack.context)
             let annotation = VirtualTouristAnnotation(pin: pin)
-            
-            //let annotation = MKPointAnnotation()
-            //annotation.coordinate = mapView.convert(press.location(in: mapView), toCoordinateFrom: mapView)
-            //annotation.title = "Title"
-            
-            
-            //let pin = Pin(longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude, context: stack.context)
-            annotation.subtitle = String(pin.longitude) + " " + String(pin.latitude)
-            
             
             flickrClient.getImpressions(forPin: pin) { (result, error) in
 
@@ -104,12 +127,10 @@ class TravelLocationsMapViewController: UIViewController {
                 }
 
             }
-            
-            //pins.append(pin)
-            print("adding annontation")
-            print(annotation)
-            print(annotation.coordinate.longitude)
-            print(annotation.coordinate.latitude)
+//            print("adding annontation")
+//            print(annotation)
+//            print(annotation.coordinate.longitude)
+//            print(annotation.coordinate.latitude)
             mapView.addAnnotation(annotation)
         }
     }
@@ -173,9 +194,9 @@ extension TravelLocationsMapViewController: CLLocationManagerDelegate {
         print("user longitude = \(userLocation.coordinate.longitude)")
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("\(error)")
-    }
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        print("\(error)")
+//    }
 
 }
 

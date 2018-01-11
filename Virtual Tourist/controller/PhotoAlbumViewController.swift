@@ -15,30 +15,35 @@ private let reuseIdentifier = "PhotoAlbumCollectionViewCell"
 
 class PhotoAlbumViewController: UIViewController {
     
-    let space:CGFloat = 3.0
-    var portraitCellDimension:CGFloat = 0.0;
-    var landscapeCellDimension:CGFloat = 0.0;
-    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var bottomButton: UIButton!
+
+    struct BottomButtonText{
+        static let removePictures = NSLocalizedString("Remove Selected Pictures", comment: "Label for Button at bottom of Photo Album Collection View")
+        static let newCollection = NSLocalizedString("new Collection", comment: "Label for Button at bottom of Photo Album Collection")
+    }
     
+    let space:CGFloat = 3.0
+    var portraitCellDimension:CGFloat = 0.0;
+    var landscapeCellDimension:CGFloat = 0.0;
+   
     var pin: Pin?
     
     let stack = CoreDataStack.shared
     let flickrClient = FlickrClient.shared
-    
-    //var fetchedResultsController: NSFetchedResultsController<Impression>!
-    
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<Impression> = {
-        
-        print("fetchedResultsController: initializing my lazy self")
 
+    lazy var fetchedResultsController: NSFetchedResultsController<Impression> = fetchResults()
+    var operationsQueue = [BlockOperation]()
+
+    private func fetchResults() -> NSFetchedResultsController<Impression> {
+        print("fetchedResultsController: initializing my lazy self")
+        
         let fetchRequest: NSFetchRequest<Impression> = Impression.fetchRequest()
         fetchRequest.sortDescriptors = []
         fetchRequest.predicate = NSPredicate(format: "pin = %@", argumentArray: [pin!])
-
+        
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
@@ -47,61 +52,55 @@ class PhotoAlbumViewController: UIViewController {
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
         }
-
+        
         return fetchedResultsController
-    }()
+    }
     
-
-
+    // MARK: - viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //fetchResults()
-        
+
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
         
         initCollectionView()
-        
+        initMapView()
+    }
+    
+    // MARK: Helper
+    
+    private func initCollectionView() {
+        collectionView.allowsMultipleSelection = true
+        updateBottomButton()
+        portraitCellDimension = (min(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
+        landscapeCellDimension = (max(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        setItemSize(for: view.frame.size)
+    }
+    
+    private func initMapView() {
         mapView.addAnnotation(VirtualTouristAnnotation(pin: pin!))
-        
         let defaultDistance = 10000.0
-        
         let region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: pin!.latitude, longitude: pin!.longitude) , defaultDistance, defaultDistance)
         mapView.setRegion(region, animated: true)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        fetchResults()
-//    }
-
-//    private func fetchResults() {
-//        let fetchRequest: NSFetchRequest<Impression> = Impression.fetchRequest()
-//        fetchRequest.sortDescriptors = []
-//        print(pin!)
-//        fetchRequest.predicate = NSPredicate(format: "pin = %@", argumentArray: [pin!])
-//
-//        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-//        fetchedResultsController.delegate = self
-//        do {
-//            try fetchedResultsController.performFetch()
-//        } catch let error as NSError {
-//            print("Fetching error: \(error), \(error.userInfo)")
-//        }
-//        print(fetchedResultsController)
-//    }
+    // MARK: - actions
     
-    private func initCollectionView() {
-        portraitCellDimension = (min(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
-        landscapeCellDimension = (max(view.frame.size.width, view.frame.size.height) - (2 * space)) / 3.0
-        
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        
-        setItemSize(for: view.frame.size)
+    @IBAction func bottomButtonPressed(_ sender: Any) {
+        if (collectionView.indexPathsForSelectedItems!.count>0) {
+            for indexPath in collectionView.indexPathsForSelectedItems! {
+                stack.context.delete(fetchedResultsController.object(at: indexPath) as Impression)
+            }
+            try? self.stack.saveContext()
+        } else {
+            
+        }
     }
-
+    
 }
 
 extension PhotoAlbumViewController: MKMapViewDelegate {
@@ -138,38 +137,55 @@ extension PhotoAlbumViewController: UICollectionViewDelegate {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateBottomButton()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateBottomButton()
+    }
+    
+    // Mark: - Helper
+ 
+    private func updateBottomButton() {
+        bottomButton.setTitle((collectionView.indexPathsForSelectedItems!.count > 0) ? BottomButtonText.removePictures : BottomButtonText.newCollection, for: .normal)
+    }
 }
 
 extension PhotoAlbumViewController: UICollectionViewDataSource {
+    
+    private func download(impression: Impression, forCell cell: PhotoAlbumCollectionViewCell) {
+    
+        flickrClient.downloadImage(fromUrl: impression.url! ) { (data, error) in
+            
+            cell.activityIndicator.startAnimating()
+            
+            guard error == nil else {
+                return
+            }
+            
+            if let data = data as? Data,
+                let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    impression.imageData = data as NSData
+                    try? self.stack.saveContext()
+                    cell.imageView.image = image
+                    cell.activityIndicator.stopAnimating()
+                }
+            }
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoAlbumCollectionViewCell
         let impression = fetchedResultsController.object(at: indexPath) as Impression
 
-        print(impression)
-        print(impression.url!)
+//        print(impression)
+//        print(impression.url!)
         
         if impression.imageData == nil {
-            
-            cell.activityIndicator.startAnimating()
-            
-            flickrClient.downloadImage(fromUrl: impression.url! ) { (data, error) in
-                
-                guard error == nil else {
-                    return
-                }
-                
-                if let data = data as? Data,
-                    let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        impression.imageData = data as NSData
-                        try? self.stack.saveContext()
-                        cell.imageView.image = image
-                        cell.activityIndicator.stopAnimating()
-                    }
-                }
-            }
+            download(impression: impression, forCell: cell)
         } else {
             let image = UIImage(data: impression.imageData! as Data)
             cell.imageView.image = image
@@ -178,10 +194,6 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        print("collectionView")
-//        print(collectionView)
-//        print(fetchedResultsController)
-//        //print(fetchedResultsController.sections)
         if let numberOfItems = fetchedResultsController.sections?[0].numberOfObjects {
             return numberOfItems
         }
@@ -190,5 +202,36 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
 }
 
 extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate{
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete:
+            addOperation {
+                self.collectionView.deleteItems(at: [indexPath!])
+            }
+        default:
+            break
+        }
+    }
+    
+    func addOperation(operation: @escaping () -> Void) {
+        operationsQueue.append(BlockOperation(block: operation))
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView.performBatchUpdates({
+            for operation in self.operationsQueue {
+                operation.start()
+            }
+        }, completion: { (finished) in
+            self.operationsQueue.removeAll()
+            self.updateBottomButton()
+        })
+    }
     
 }
+
+
+
+
+

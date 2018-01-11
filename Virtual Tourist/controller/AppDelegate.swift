@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])
         
-        preloadData()
+        //preloadData()
         
         //stack.autoSave(1)
         

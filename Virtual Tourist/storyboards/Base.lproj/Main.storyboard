@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -99,16 +100,22 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jW9-lj-7JP">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jW9-lj-7JP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
-                                            <state key="normal" title="new Collection"/>
+                                            <state key="normal" title="do something">
+                                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="bottomButtonPressed:" destination="gR8-L2-Zmw" eventType="touchUpInside" id="Aej-72-1wk"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="jW9-lj-7JP" secondAttribute="trailing" id="18T-GK-UGO"/>
                                         <constraint firstAttribute="bottom" secondItem="jW9-lj-7JP" secondAttribute="bottom" id="DS1-Gy-Jwi"/>
-                                        <constraint firstAttribute="trailing" secondItem="jW9-lj-7JP" secondAttribute="trailing" id="KKf-ht-MD7"/>
-                                        <constraint firstItem="jW9-lj-7JP" firstAttribute="leading" secondItem="AfD-Ck-AGS" secondAttribute="leading" id="UlK-Te-JAX"/>
                                         <constraint firstItem="jW9-lj-7JP" firstAttribute="top" secondItem="AfD-Ck-AGS" secondAttribute="top" id="aFz-Jz-gcU"/>
+                                        <constraint firstItem="jW9-lj-7JP" firstAttribute="leading" secondItem="AfD-Ck-AGS" secondAttribute="leading" id="uyL-mf-mrK"/>
+                                        <constraint firstItem="jW9-lj-7JP" firstAttribute="centerX" secondItem="AfD-Ck-AGS" secondAttribute="centerX" id="zgk-y4-32P"/>
                                     </constraints>
                                 </view>
                                 <constraints>
@@ -144,6 +151,7 @@
                                                         </activityIndicatorView>
                                                     </subviews>
                                                 </view>
+                                                <color key="backgroundColor" name="CellBackground"/>
                                                 <constraints>
                                                     <constraint firstItem="qpC-P4-Ngj" firstAttribute="centerX" secondItem="suf-LI-M2Q" secondAttribute="centerX" id="7sH-tb-vvG"/>
                                                     <constraint firstItem="qpC-P4-Ngj" firstAttribute="centerY" secondItem="suf-LI-M2Q" secondAttribute="centerY" id="9fO-ia-Jb4"/>
@@ -189,6 +197,7 @@
                         <viewLayoutGuide key="safeArea" id="Um1-f6-y4u"/>
                     </view>
                     <connections>
+                        <outlet property="bottomButton" destination="jW9-lj-7JP" id="lYa-FB-tI7"/>
                         <outlet property="collectionView" destination="5aQ-tL-qmt" id="8Cf-n7-Yc2"/>
                         <outlet property="flowLayout" destination="LGn-u0-tcj" id="Efn-qq-NGS"/>
                         <outlet property="mapView" destination="1SL-3W-81K" id="UjI-nI-euF"/>
@@ -326,5 +335,8 @@
     </scenes>
     <resources>
         <image name="settings" width="72" height="72"/>
+        <namedColor name="CellBackground">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
