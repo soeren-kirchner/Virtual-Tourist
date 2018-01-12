@@ -13,13 +13,12 @@ import CoreData
 
 class TravelLocationsMapViewController: UIViewController {
 
-    //private var pins = [Pin] ()
+    let photoAlbumSegueIdentifier = "PhotoAlbumSegue"
     
     let stack = CoreDataStack.shared
     let flickrClient = FlickrClient.shared
     
     @IBOutlet weak var editButton: UIBarButtonItem!
-    
     @IBOutlet weak var hintViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     
@@ -167,14 +166,21 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             else {
                 print("show details")
                 selectedPin = annotation.pin
-                performSegue(withIdentifier: "PhotoAlbumSegue", sender: self)
+                performSegue(withIdentifier: photoAlbumSegueIdentifier, sender: self)
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let photoAlbumViewController = segue.destination as! PhotoAlbumViewController
-        photoAlbumViewController.pin = selectedPin
+        if let identifier = segue.identifier {
+            switch identifier {
+            case photoAlbumSegueIdentifier:
+                let photoAlbumViewController = segue.destination as! PhotoAlbumViewController
+                photoAlbumViewController.pin = selectedPin
+            default:
+                break
+            }
+        }
     }
     
 }

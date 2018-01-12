@@ -9,7 +9,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -65,14 +64,11 @@
                                 <segue destination="goc-Vj-fRh" kind="show" id="7Zm-sA-1B4"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Item" id="kS7-2A-1Tk">
-                                <connections>
-                                    <action selector="editMode:" destination="BYZ-38-t0r" id="pGC-eF-Lyh"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" id="tly-oz-Evq"/>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="edit" id="kS7-2A-1Tk">
+                            <connections>
+                                <action selector="editMode:" destination="BYZ-38-t0r" id="pGC-eF-Lyh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -274,6 +270,35 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Reset" id="ITf-JZ-F98">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="yrl-cs-xfj">
+                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yrl-cs-xfj" id="B9A-pl-mvu">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="usO-0g-tsw">
+                                                    <rect key="frame" x="0.0" y="5.5" width="375" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="Delete all Data">
+                                                        <color key="titleColor" name="ERROR"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteAll:" destination="goc-Vj-fRh" eventType="touchUpInside" id="RCk-el-eO3"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="usO-0g-tsw" firstAttribute="centerY" secondItem="B9A-pl-mvu" secondAttribute="centerY" id="LAw-sQ-YWc"/>
+                                                <constraint firstItem="usO-0g-tsw" firstAttribute="leading" secondItem="B9A-pl-mvu" secondAttribute="leading" id="pRp-n3-dOH"/>
+                                                <constraint firstAttribute="trailing" secondItem="usO-0g-tsw" secondAttribute="trailing" id="vP4-wf-XiV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="goc-Vj-fRh" id="3mA-gp-qWm"/>
@@ -337,6 +362,9 @@
         <image name="settings" width="72" height="72"/>
         <namedColor name="CellBackground">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ERROR">
+            <color red="0.89999997615814209" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

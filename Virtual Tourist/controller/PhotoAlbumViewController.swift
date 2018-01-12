@@ -155,7 +155,6 @@ extension PhotoAlbumViewController: UICollectionViewDelegate {
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
     private func download(impression: Impression, forCell cell: PhotoAlbumCollectionViewCell) {
-    
         flickrClient.downloadImage(fromUrl: impression.url! ) { (data, error) in
             
             cell.activityIndicator.startAnimating()
