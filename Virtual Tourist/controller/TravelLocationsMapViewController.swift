@@ -98,7 +98,7 @@ class TravelLocationsMapViewController: UIViewController {
             editButton.title = NSLocalizedString("done", comment: "done - button in navigation bar")
         }
         else {
-            hintViewBottomConstraint.constant = -45
+            hintViewBottomConstraint.constant = -50
             editButton.title = NSLocalizedString("edit", comment: "edit - button in navigation bar")
         }
     }
