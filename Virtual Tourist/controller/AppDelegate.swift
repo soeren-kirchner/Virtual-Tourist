@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 typealias JSONDictionary = [String:AnyObject]
 typealias JSONArray = [JSONDictionary]
@@ -30,14 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
         // test
         print(Settings.shared.preferredLanguage)
         Settings.shared.set("de")
         print(Settings.shared.preferredLanguage)
-
-        UINavigationBar.appearance().tintColor = UIColor(named: "BarTint")
         
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])

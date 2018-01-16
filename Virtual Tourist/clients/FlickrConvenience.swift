@@ -10,19 +10,17 @@ import Foundation
 
 extension FlickrClient {
     
-    func getImpressions(forPin pin: Pin, page: Int = 1, completionHandler: @escaping FlickrDefaultCompletionHandler) {
+    func getImpressions(forPin pin: Pin, completionHandler: @escaping FlickrDefaultCompletionHandler) {
         
-        let parameters = [FlickrClient.URLParameterKeys.APIKey: FlickrClient.Constants.APIKey,
+        var parameters = [FlickrClient.URLParameterKeys.APIKey: FlickrClient.Constants.APIKey,
                           FlickrClient.URLParameterKeys.Method: FlickrClient.URLParameterValues.PhotoSearch,
                           FlickrClient.URLParameterKeys.Media: FlickrClient.URLParameterValues.PhotoSearch,
                           FlickrClient.URLParameterKeys.NoJSONCallback: FlickrClient.URLParameterValues.NoJSONCallback,
                           FlickrClient.URLParameterKeys.Format: FlickrClient.URLParameterValues.JSONFormat,
                           FlickrClient.URLParameterKeys.Extras: FlickrClient.URLParameterValues.URLMediumPhoto,
                           FlickrClient.URLParameterKeys.PerPage: String(Constants.imagesPerGallery),
-                          FlickrClient.URLParameterKeys.Page: String(page),
                           FlickrClient.URLParameterKeys.Longitude: String(pin.longitude),
                           FlickrClient.URLParameterKeys.Latitude: String(pin.latitude)]
-        
         
         taskForGETAndPOST("", parameters: parameters as ParametersArray) { (results, error) in
             
@@ -31,56 +29,50 @@ extension FlickrClient {
                 return
             }
             
-            print("results:")
-            print(results!)
-            
             guard
                 let photosDictionary = results?.value(forKey: "photos") as? JSONDictionary,
-                let photosArray = photosDictionary["photo"] as? JSONArray
+                let pages = photosDictionary["pages"] as? Int
                 else {
                     completionHandler(nil, NSError(domain: "getPhotos", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse Results"]))
                     return
             }
 
-//            guard let impressions = pin.impressions else {
-//                print("something went really wrong")
-//                return
-//            }
-//
-            for (index, item) in photosArray.enumerated() {
-                print(index)
-                print(item)
+            parameters[FlickrClient.URLParameterKeys.Page] = String(self.getRandomPage(maxPage: pages))
+            
+            self.taskForGETAndPOST("", parameters: parameters as ParametersArray) { (results, error) in
                 
-                guard let imageUrl = item[FlickrClient.URLParameterValues.URLMediumPhoto] as? String else {
-                    print ("error")
+                guard error == nil else {
+                    completionHandler(nil, error)
                     return
                 }
-                print(imageUrl)
-
-                let impression = Impression(url: URL(string: imageUrl)!, context: self.stack.context)
-                impression.pin = pin
-                //pin.impressions!.adding(impression)
                 
-                print(pin.impressions!.count)
+                print(results!)
                 
+                guard
+                    let photosDictionary = results?.value(forKey: "photos") as? JSONDictionary,
+                    let photosArray = photosDictionary["photo"] as? JSONArray
+                    else {
+                        completionHandler(nil, NSError(domain: "getPhotos", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse Results"]))
+                        return
+                }
+                
+                for item in photosArray {
                     
+                    print(item)
                     
-                //impressions.adding(<#T##anObject: Any##Any#>)
-//                guard let student = StudentInformation(dictionary: item) else {
-//                    // print error to console only
-//                    print("could not create and append student at index: \(index). Incorrect keys.")
-//                    continue
-//                }
-
-                //students.append(student)
+                    guard let imageUrl = item[FlickrClient.URLParameterValues.URLMediumPhoto] as? String else {
+                        return
+                    }
+                    
+                    let impression = Impression(url: URL(string: imageUrl)!, context: self.stack.context)
+                    impression.pin = pin
+                    
+                    print(pin.impressions!.count)
+                    
+                }
+                
+                completionHandler(results, nil)
             }
-            
-            print("Created Objects")
-            print(pin.impressions!.count)
-            print(pin.impressions!)
-            print(pin)
-            
-            completionHandler(results, nil)
         }
     }
     
@@ -95,6 +87,8 @@ extension FlickrClient {
         task.resume()
     }
     
-    
+    func getRandomPage(maxPage: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(maxPage))) + 1
+    }
     
 }

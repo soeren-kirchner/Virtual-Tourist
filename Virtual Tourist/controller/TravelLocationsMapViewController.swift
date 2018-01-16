@@ -51,8 +51,10 @@ class TravelLocationsMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.title = NSLocalizedString("Virtual Tourist", comment: "Navbar Title - Virtual Tourist")
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        setDarkMode()
+        
         editButton.title = NSLocalizedString("edit", comment: "done - edit - button in navigation bar")
   
         mapView.delegate = self
@@ -71,12 +73,6 @@ class TravelLocationsMapViewController: UIViewController {
         }
         
         fetchStoredAnnotations()
- 
-//        let userLocation = mapView.userLocation
-//        print(userLocation.location?.coordinate)
-//        let region = MKCoordinateRegionMakeWithDistance(userLocation.location!.coordinate, 100, 100)
-//        mapView.setRegion(region, animated: true)
-        
     }
     
     private func fetchStoredAnnotations() {
@@ -85,7 +81,6 @@ class TravelLocationsMapViewController: UIViewController {
             print(pin)
             let annontation = VirtualTouristAnnotation(pin: pin)
             mapView.addAnnotation(annontation)
-            
         }
     }
 
@@ -116,30 +111,14 @@ class TravelLocationsMapViewController: UIViewController {
                     return
                 }
 
-                // TODO: to completion handler
-                do {
-                    print("save context")
-                    try self.stack.saveContext()
-                }
-                catch {
-                    print("error")
-                }
-
+                self.saveContext()
             }
-//            print("adding annontation")
-//            print(annotation)
-//            print(annotation.coordinate.longitude)
-//            print(annotation.coordinate.latitude)
             mapView.addAnnotation(annotation)
         }
     }
 }
 
 extension TravelLocationsMapViewController: MKMapViewDelegate {
-    
-//    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//        print("map finished loading")
-//    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -161,10 +140,11 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         
         if let annotation = view.annotation as? VirtualTouristAnnotation {
             if (editMode) {
+                stack.context.delete(annotation.pin)
                 mapView.removeAnnotation(annotation)
+                saveContext()
             }
             else {
-                print("show details")
                 selectedPin = annotation.pin
                 performSegue(withIdentifier: photoAlbumSegueIdentifier, sender: self)
             }
@@ -182,28 +162,16 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             }
         }
     }
-    
 }
 
 extension TravelLocationsMapViewController: CLLocationManagerDelegate {
         
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("didUpdateLocations")
-        
         manager.stopUpdatingLocation()
         let userLocation: CLLocation = locations[0] as CLLocation
-        
         let region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 500, 500)
         mapView.setRegion(region, animated: true)
-        
-        print("user latitude = \(userLocation.coordinate.latitude)")
-        print("user longitude = \(userLocation.coordinate.longitude)")
     }
-    
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("\(error)")
-//    }
-
 }
 
 

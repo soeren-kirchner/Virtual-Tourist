@@ -79,6 +79,7 @@ class PhotoAlbumViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = space
         flowLayout.minimumLineSpacing = space
         setItemSize(for: view.frame.size)
+        collectionView.backgroundColor = isDarkMode() ? .darkGray : .white
     }
     
     private func initMapView() {
@@ -95,9 +96,26 @@ class PhotoAlbumViewController: UIViewController {
             for indexPath in collectionView.indexPathsForSelectedItems! {
                 stack.context.delete(fetchedResultsController.object(at: indexPath) as Impression)
             }
-            try? self.stack.saveContext()
+            saveContext()
         } else {
+            for result in fetchedResultsController.fetchedObjects! {
+                self.stack.context.delete(result)
+            }
+            //try? self.stack.saveContext()
             
+            flickrClient.getImpressions(forPin: pin!) { (result, error) in
+                
+                guard error == nil else {
+                    print("some error")
+                    return
+                }
+                
+                // TODO: to completion handler
+                // try? self.stack.context.save()
+                self.saveContext()
+                try? self.fetchedResultsController.performFetch()
+
+            }
         }
     }
     
@@ -155,9 +173,9 @@ extension PhotoAlbumViewController: UICollectionViewDelegate {
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
     private func download(impression: Impression, forCell cell: PhotoAlbumCollectionViewCell) {
+        cell.activityIndicator.startAnimating()
+        
         flickrClient.downloadImage(fromUrl: impression.url! ) { (data, error) in
-            
-            cell.activityIndicator.startAnimating()
             
             guard error == nil else {
                 return
@@ -167,7 +185,7 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
                 let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     impression.imageData = data as NSData
-                    try? self.stack.saveContext()
+                    self.saveContext()
                     cell.imageView.image = image
                     cell.activityIndicator.stopAnimating()
                 }
@@ -179,9 +197,8 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoAlbumCollectionViewCell
         let impression = fetchedResultsController.object(at: indexPath) as Impression
-
-//        print(impression)
-//        print(impression.url!)
+        
+        cell.imageView.image = UIImage(named: "placeholder")
         
         if impression.imageData == nil {
             download(impression: impression, forCell: cell)
@@ -207,6 +224,10 @@ extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate{
         case .delete:
             addOperation {
                 self.collectionView.deleteItems(at: [indexPath!])
+            }
+        case .insert:
+            addOperation {
+                self.collectionView.insertItems(at: [newIndexPath!])
             }
         default:
             break

@@ -12,23 +12,29 @@ import CoreData
 class SettingsViewController: UITableViewController {
 
     let stack = CoreDataStack.shared
+    let app = UIApplication.shared
+    
+    @IBOutlet weak var darkModeSwitch: UISwitch!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        darkModeSwitch.setOn(UserDefaults.standard.bool(forKey: UserDefaults.SettingsKeys.darkmode), animated: false)
+    }
     
     @IBAction func deleteAll(_ sender: Any) {
         print("delete all")
         showOkayCancel(title: "Delete all Data", question: "Are you sure to delete all your content") { (okay) in
             if okay {
-                print("okay")
-                //CoreDataStack.dropAllData(stack: )
-            } else {
-                print("cancel")
+                try? self.stack.dropAllData()
             }
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    @IBAction func setDarkMode(_ sender: Any) {
+        UserDefaults.standard.set(darkModeSwitch.isOn, forKey: UserDefaults.SettingsKeys.darkmode)
+        setDarkMode()
     }
-
+    
+    
 
 }

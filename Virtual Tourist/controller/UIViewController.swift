@@ -35,5 +35,29 @@ extension UIViewController {
             self.present(alertViewController, animated: true, completion: nil)
         }
     }
+    
+    func setDarkMode() {
+        if let navBar = navigationController?.navigationBar {
+            if isDarkMode() {
+                navBar.barStyle = .blackTranslucent
+            } else {
+                navBar.barStyle = .default
+            }
+        }
+    }
+    
+    func isDarkMode() -> Bool {
+        return UserDefaults.standard.bool(forKey: UserDefaults.SettingsKeys.darkmode)
+    }
+    
+    func saveContext() {
+        do {
+            try CoreDataStack.shared.saveContext()
+        }
+        catch {
+            print("error")
+        }
+    }
+    
 }
 

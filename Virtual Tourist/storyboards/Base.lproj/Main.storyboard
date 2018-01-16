@@ -59,7 +59,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="fuj-5w-eag">
-                        <barButtonItem key="leftBarButtonItem" image="settings" id="PoO-Qx-ULl">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="PoO-Qx-ULl">
                             <connections>
                                 <segue destination="goc-Vj-fRh" kind="show" id="7Zm-sA-1B4"/>
                             </connections>
@@ -97,8 +97,8 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jW9-lj-7JP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
-                                            <state key="normal" title="do something">
+                                            <rect key="frame" x="172.5" y="0.0" width="30" height="45"/>
+                                            <state key="normal">
                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             </state>
                                             <connections>
@@ -107,10 +107,8 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="jW9-lj-7JP" secondAttribute="trailing" id="18T-GK-UGO"/>
                                         <constraint firstAttribute="bottom" secondItem="jW9-lj-7JP" secondAttribute="bottom" id="DS1-Gy-Jwi"/>
                                         <constraint firstItem="jW9-lj-7JP" firstAttribute="top" secondItem="AfD-Ck-AGS" secondAttribute="top" id="aFz-Jz-gcU"/>
-                                        <constraint firstItem="jW9-lj-7JP" firstAttribute="leading" secondItem="AfD-Ck-AGS" secondAttribute="leading" id="uyL-mf-mrK"/>
                                         <constraint firstItem="jW9-lj-7JP" firstAttribute="centerX" secondItem="AfD-Ck-AGS" secondAttribute="centerX" id="zgk-y4-32P"/>
                                     </constraints>
                                 </view>
@@ -139,7 +137,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="115" height="108"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7e6-gC-ZpE">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="7e6-gC-ZpE">
                                                             <rect key="frame" x="0.0" y="0.0" width="115" height="108"/>
                                                         </imageView>
                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qpC-P4-Ngj">
@@ -229,6 +227,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-bw-Yh1">
                                                     <rect key="frame" x="308" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="setDarkMode:" destination="goc-Vj-fRh" eventType="valueChanged" id="F3w-07-9Oj"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -305,6 +306,9 @@
                             <outlet property="delegate" destination="goc-Vj-fRh" id="Nym-iZ-wXu"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="darkModeSwitch" destination="CKD-bw-Yh1" id="xcq-Ff-qtQ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5m6-ol-tSM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -359,7 +363,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="settings" width="72" height="72"/>
+        <image name="placeholder" width="1280" height="960"/>
         <namedColor name="CellBackground">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
