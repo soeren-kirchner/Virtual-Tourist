@@ -55,7 +55,7 @@ extension UIViewController {
             try CoreDataStack.shared.saveContext()
         }
         catch {
-            print("error")
+            showAlert(title: NSLocalizedString("ERROR", comment: "ERROR"), alert: NSLocalizedString("An Error occured while storing data", comment: "Error Message for the user when the App cannot store data"))
         }
     }
     

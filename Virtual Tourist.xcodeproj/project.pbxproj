@@ -23,7 +23,7 @@
 		115C9B551FF42F940022DEB4 /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C9B541FF42F940022DEB4 /* FlickrConvenience.swift */; };
 		117F1BCD1FDD871E00D5040E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117F1BCC1FDD871E00D5040E /* SettingsViewController.swift */; };
 		117F1BCF1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117F1BCE1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift */; };
-		119A2F6D1FDDDB35000CF7A7 /* LanguageSelectionCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionCellTableViewCell.swift */; };
+		119A2F6D1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift */; };
 		119A2F6F1FDDDC77000CF7A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A2F6E1FDDDC77000CF7A7 /* Settings.swift */; };
 		119A2F711FDDFC26000CF7A7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 119A2F701FDDFC26000CF7A7 /* Colors.xcassets */; };
 		119A2F731FE44BCF000CF7A7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A2F721FE44BCF000CF7A7 /* UIColor.swift */; };
@@ -56,7 +56,7 @@
 		115C9B541FF42F940022DEB4 /* FlickrConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
 		117F1BCC1FDD871E00D5040E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		117F1BCE1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionTableViewController.swift; sourceTree = "<group>"; };
-		119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionCellTableViewCell.swift; sourceTree = "<group>"; };
+		119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		119A2F6E1FDDDC77000CF7A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		119A2F701FDDFC26000CF7A7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		119A2F721FE44BCF000CF7A7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 				117F1BCC1FDD871E00D5040E /* SettingsViewController.swift */,
 				11A062772009453200A39E91 /* UserDefaults.swift */,
 				117F1BCE1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift */,
-				119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionCellTableViewCell.swift */,
+				119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift */,
 				119A2F721FE44BCF000CF7A7 /* UIColor.swift */,
 				1113310D1FF978190010BF2D /* UIViewController.swift */,
 			);
@@ -265,7 +265,7 @@
 				115C9B511FF2DF610022DEB4 /* FlickrClient.swift in Sources */,
 				117F1BCF1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift in Sources */,
 				119FE86E1FFFE292009888E5 /* VirtualTouristAnnotationView.swift in Sources */,
-				119A2F6D1FDDDB35000CF7A7 /* LanguageSelectionCellTableViewCell.swift in Sources */,
+				119A2F6D1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift in Sources */,
 				117F1BCD1FDD871E00D5040E /* SettingsViewController.swift in Sources */,
 				115C9B2A1FF2BB990022DEB4 /* CoreDataStack.swift in Sources */,
 			);

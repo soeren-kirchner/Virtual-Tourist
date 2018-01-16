@@ -8,8 +8,11 @@
 
 import UIKit
 
-class LanguageSelectionCellTableViewCell: UITableViewCell {
+class LanguageSelectionTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var englishName: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

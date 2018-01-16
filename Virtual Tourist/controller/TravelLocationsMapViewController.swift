@@ -71,7 +71,12 @@ class TravelLocationsMapViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        
+ 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        mapView.showsUserLocation = true
+        mapView.removeAnnotations(mapView.annotations)
         fetchStoredAnnotations()
     }
     

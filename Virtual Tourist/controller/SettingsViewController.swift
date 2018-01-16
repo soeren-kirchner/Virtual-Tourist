@@ -34,7 +34,5 @@ class SettingsViewController: UITableViewController {
         UserDefaults.standard.set(darkModeSwitch.isOn, forKey: UserDefaults.SettingsKeys.darkmode)
         setDarkMode()
     }
-    
-    
 
 }
