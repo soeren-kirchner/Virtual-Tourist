@@ -30,11 +30,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap Pins to delete them" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhn-0j-5vV">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhn-0j-5vV">
                                             <rect key="frame" x="0.0" y="14" width="375" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" name="edit"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -64,7 +64,7 @@
                                 <segue destination="goc-Vj-fRh" kind="show" id="7Zm-sA-1B4"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="edit" id="kS7-2A-1Tk">
+                        <barButtonItem key="rightBarButtonItem" id="kS7-2A-1Tk">
                             <connections>
                                 <action selector="editMode:" destination="BYZ-38-t0r" id="pGC-eF-Lyh"/>
                             </connections>
@@ -73,8 +73,10 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editButton" destination="kS7-2A-1Tk" id="AK2-5r-6x1"/>
+                        <outlet property="hintLabel" destination="hhn-0j-5vV" id="wfe-fV-spX"/>
                         <outlet property="hintViewBottomConstraint" destination="Vtq-B0-M5u" id="u0f-Mz-Qus"/>
                         <outlet property="mapView" destination="SWb-wx-dle" id="uYc-ND-7FM"/>
+                        <outlet property="visualEffectView" destination="XTM-Jz-APs" id="pHC-RN-ZxQ"/>
                         <segue destination="gR8-L2-Zmw" kind="show" identifier="PhotoAlbumSegue" id="u9P-qo-a7X"/>
                     </connections>
                 </viewController>
@@ -195,6 +197,7 @@
                         <outlet property="collectionView" destination="5aQ-tL-qmt" id="8Cf-n7-Yc2"/>
                         <outlet property="flowLayout" destination="LGn-u0-tcj" id="Efn-qq-NGS"/>
                         <outlet property="mapView" destination="1SL-3W-81K" id="UjI-nI-euF"/>
+                        <outlet property="visualEffectView" destination="32K-2D-46T" id="Vvq-uc-e3d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fRw-DB-SI9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -252,8 +255,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English (System Default)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyL-3s-qhE">
-                                                    <rect key="frame" x="16" y="12" width="188" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyL-3s-qhE">
+                                                    <rect key="frame" x="16" y="22.5" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -308,6 +311,7 @@
                     </tableView>
                     <connections>
                         <outlet property="darkModeSwitch" destination="CKD-bw-Yh1" id="xcq-Ff-qtQ"/>
+                        <outlet property="languageLabel" destination="oyL-3s-qhE" id="N60-qA-WNK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5m6-ol-tSM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -330,15 +334,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tvb-lB-kYF">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tvb-lB-kYF">
                                             <rect key="frame" x="16" y="5" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gnf-Gh-sE4">
-                                            <rect key="frame" x="16" y="25.5" width="33" height="14.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gnf-Gh-sE4">
+                                            <rect key="frame" x="16" y="25.5" width="44" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -389,6 +393,9 @@
         </namedColor>
         <namedColor name="ERROR">
             <color red="0.89999997615814209" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="edit">
+            <color red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

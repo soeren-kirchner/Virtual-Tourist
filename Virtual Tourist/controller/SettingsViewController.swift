@@ -15,14 +15,28 @@ class SettingsViewController: UITableViewController {
     let app = UIApplication.shared
     
     @IBOutlet weak var darkModeSwitch: UISwitch!
+    @IBOutlet weak var languageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initValues()
+    }
+    
+    fileprivate func initValues() {
         darkModeSwitch.setOn(UserDefaults.standard.bool(forKey: UserDefaults.SettingsKeys.darkmode), animated: false)
+        if let language = UserDefaults.standard.string(forKey: "userLanguage") {
+            languageLabel.text = language
+        }
+        else {
+            languageLabel.text = LanguageSelectionTableViewController.defaulLanguage.name
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        initValues()
     }
     
     @IBAction func deleteAll(_ sender: Any) {
-        print("delete all")
         showOkayCancel(title: "Delete all Data", question: "Are you sure to delete all your content") { (okay) in
             if okay {
                 try? self.stack.dropAllData()

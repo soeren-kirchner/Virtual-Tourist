@@ -13,7 +13,7 @@ class VirtualTouristAnnotationView: MKMarkerAnnotationView {
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        markerTintColor = .green
+        markerTintColor = .pin
         glyphImage = UIImage(named: "binoculars")
         animatesWhenAdded = true
         isDraggable = true

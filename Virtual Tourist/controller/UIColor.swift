@@ -11,5 +11,8 @@ import UIKit
 
 extension UIColor {
     static let barTint = UIColor(named: "barTint")
-    static let editColor = UIColor(named: "editColor")
+    static let edit = UIColor(named: "edit")
+    static let pin = UIColor(named: "pin")
+    static let darkBarTint = UIColor(named: "darkBarTint")
+    static let lightBarTint = UIColor(named: "lightBarTint")
 }

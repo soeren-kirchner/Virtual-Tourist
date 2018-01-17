@@ -19,6 +19,10 @@ class TravelLocationsMapViewController: UIViewController {
     let flickrClient = FlickrClient.shared
     
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+    
+    @IBOutlet weak var hintLabel: UILabel!
+    
     @IBOutlet weak var hintViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     
@@ -52,11 +56,7 @@ class TravelLocationsMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        setDarkMode()
-        
-        editButton.title = NSLocalizedString("edit", comment: "done - edit - button in navigation bar")
-  
+
         mapView.delegate = self
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(press:)))
@@ -71,10 +71,11 @@ class TravelLocationsMapViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
- 
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        setSelfDarkMode()
+        updateUI()
         mapView.showsUserLocation = true
         mapView.removeAnnotations(mapView.annotations)
         fetchStoredAnnotations()
@@ -88,19 +89,35 @@ class TravelLocationsMapViewController: UIViewController {
             mapView.addAnnotation(annontation)
         }
     }
+    
+    private func setSelfDarkMode() {
+        setDarkMode()
+        if isDarkMode() {
+            visualEffectView.effect = UIBlurEffect(style: .dark)
+            print("dark")
+        }
+        else {
+            visualEffectView.effect = UIBlurEffect(style: .light)
+            print("light")
+        }
+    }
 
-    @IBAction func editMode(_ sender: Any) {
-        print("edit pressed");
-        print(hintViewBottomConstraint!)
-        editMode = !editMode
+    private func updateUI() {
         if editMode {
             hintViewBottomConstraint.constant = 0
-            editButton.title = NSLocalizedString("done", comment: "done - button in navigation bar")
+            editButton.title = NSLocalizedString("Done", comment: "done - button in navigation bar")
         }
         else {
             hintViewBottomConstraint.constant = -50
-            editButton.title = NSLocalizedString("edit", comment: "edit - button in navigation bar")
+            editButton.title = NSLocalizedString("Edit", comment: "edit - button in navigation bar")
         }
+    }
+    
+    @IBAction func editMode(_ sender: Any) {
+//        print("edit pressed");
+//        print(hintViewBottomConstraint!)
+        editMode = !editMode
+        updateUI()
     }
     
     @objc func addAnnotation(press:UILongPressGestureRecognizer) {

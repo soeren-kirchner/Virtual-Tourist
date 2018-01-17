@@ -18,11 +18,12 @@ class PhotoAlbumViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
     @IBOutlet weak var bottomButton: UIButton!
 
     struct BottomButtonText{
         static let removePictures = NSLocalizedString("Remove Selected Pictures", comment: "Label for Button at bottom of Photo Album Collection View")
-        static let newCollection = NSLocalizedString("new Collection", comment: "Label for Button at bottom of Photo Album Collection")
+        static let newCollection = NSLocalizedString("New Collection", comment: "Label for Button at bottom of Photo Album Collection")
     }
     
     let space:CGFloat = 3.0
@@ -67,9 +68,29 @@ class PhotoAlbumViewController: UIViewController {
         
         initCollectionView()
         initMapView()
+        setSelfDarkMode()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setSelfDarkMode()
     }
     
     // MARK: Helper
+    
+    private func setSelfDarkMode() {
+        setDarkMode()
+        if isDarkMode() {
+            visualEffectView.effect = UIBlurEffect(style: .dark)
+            bottomButton.setTitleColor(.darkBarTint, for: .normal)
+            print("dark")
+        }
+        else {
+            visualEffectView.effect = UIBlurEffect(style: .light)
+            bottomButton.setTitleColor(.lightBarTint, for: .normal)
+            print("light")
+        }
+    }
     
     private func initCollectionView() {
         collectionView.allowsMultipleSelection = true
@@ -101,7 +122,8 @@ class PhotoAlbumViewController: UIViewController {
             for result in fetchedResultsController.fetchedObjects! {
                 self.stack.context.delete(result)
             }
-            //try? self.stack.saveContext()
+            
+            saveContext()
             
             flickrClient.getImpressions(forPin: pin!) { (result, error) in
                 
@@ -109,16 +131,11 @@ class PhotoAlbumViewController: UIViewController {
                     print("some error")
                     return
                 }
-                
-                // TODO: to completion handler
-                // try? self.stack.context.save()
                 self.saveContext()
                 try? self.fetchedResultsController.performFetch()
-
             }
         }
     }
-    
 }
 
 extension PhotoAlbumViewController: MKMapViewDelegate {

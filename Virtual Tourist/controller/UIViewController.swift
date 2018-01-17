@@ -40,7 +40,9 @@ extension UIViewController {
         if let navBar = navigationController?.navigationBar {
             if isDarkMode() {
                 navBar.barStyle = .blackTranslucent
+                navBar.tintColor = .darkBarTint
             } else {
+                navBar.tintColor = .lightBarTint
                 navBar.barStyle = .default
             }
         }
