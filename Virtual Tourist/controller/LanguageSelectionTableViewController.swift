@@ -41,7 +41,6 @@ class LanguageSelectionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languages.count
     }
-
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: languageCellIdentifier, for: indexPath) as! LanguageSelectionTableViewCell
@@ -57,10 +56,10 @@ class LanguageSelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         
         let languageCode = languages[indexPath.row].code
-        
-        
+        UserDefaults.standard.set([languageCode], forKey: "AppleLanguages")
+        print(UserDefaults.standard.string(forKey: "AppleLanguages"))
+        print(Locale.preferredLanguages[0])
         showAlert(title: NSLocalizedString("Restart", comment: "Title for restart dialog"), alert: "Please shutdown and restart the App to activate the language change.")
-        
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

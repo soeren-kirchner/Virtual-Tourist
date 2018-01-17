@@ -17,7 +17,6 @@ typealias ParametersArray = [String:AnyObject]
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
     let stack = CoreDataStack.shared
   
     fileprivate func saveContext() {
@@ -33,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // test
-        print(Settings.shared.preferredLanguage)
-        Settings.shared.set("de")
-        print(Settings.shared.preferredLanguage)
+//        print(Settings.shared.preferredLanguage)
+//        Settings.shared.set("de")
+//        print(Settings.shared.preferredLanguage)
         
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])
