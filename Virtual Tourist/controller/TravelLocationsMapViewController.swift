@@ -38,14 +38,7 @@ class TravelLocationsMapViewController: UIViewController {
         fetchRequest.sortDescriptors = []
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-//
-//        // TODO: Eooro handling
-//        do {
-//            try fetchedResultsController.performFetch()
-//        } catch let error as NSError {
-//            print("Fetching error: \(error), \(error.userInfo)")
-//        }
-//
+
         return fetchedResultsController
     }
     
@@ -63,7 +56,6 @@ class TravelLocationsMapViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         mapView.delegate = self
-        //fetchResults()
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(press:)))
         longPressGestureRecognizer.minimumPressDuration = 1.0
@@ -81,31 +73,15 @@ class TravelLocationsMapViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         updateDarkMode()
         updateUI()
-        //mapView.showsUserLocation = true
-        //mapView.removeAnnotations(mapView.annotations)
         fetchStoredAnnotations()
     }
     
-//    private func updateMapView() {
-//        print("will update map")
-//        print("delete all annotation")
-//        mapView.removeAnnotations(mapView.annotations)
-//        for pin in fetchedResultsController.fetchedObjects! {
-//            print(pin)
-//            let annontation = VirtualTouristAnnotation(pin: pin)
-//            mapView.addAnnotation(annontation)
-//        }
-//    }
-    
     private func fetchStoredAnnotations() {
-        //try? fetchedResultsController.performFetch()
         fetchResults()
         let diff = (CLLocationManager.authorizationStatus().rawValue > CLAuthorizationStatus.authorizedAlways.rawValue) ? 1 : 0
         if mapView.annotations.count==0 || mapView.annotations.count != fetchedResultsController.fetchedObjects!.count+diff {
             mapView.removeAnnotations(mapView.annotations)
             for pin in fetchedResultsController.fetchedObjects! {
-//                let annontation = VirtualTouristAnnotation(pin: pin)
-//                mapView.addAnnotation(annontation)
                 mapView.addAnnotation(VirtualTouristAnnotation(pin: pin))
             }
         }
@@ -114,18 +90,10 @@ class TravelLocationsMapViewController: UIViewController {
     // TODO: Merge setSelfDarkMode and update UI
     private func updateDarkMode() {
         setDarkMode()
-//        if isDarkMode() {
-//            visualEffectView.effect = UIBlurEffect(style: .dark)
-//        }
-//        else {
-//            visualEffectView.effect = UIBlurEffect(style: .light)
-//        }
         visualEffectView.effect = UIBlurEffect(style: isDarkMode() ? .dark : .light)
     }
 
     private func updateUI() {
-//        hintViewBottomConstraint.constant = editMode ? 0 : -50
-//        editButton.title = editMode ? NSLocalizedString("Done", comment: "done - button in navigation bar") : NSLocalizedString("Edit", comment: "edit - button in navigation bar")
         if editMode {
             hintViewBottomConstraint.constant = 0
             editButton.title = NSLocalizedString("Done", comment: "done - button in navigation bar")
@@ -137,8 +105,6 @@ class TravelLocationsMapViewController: UIViewController {
     }
     
     @IBAction func editMode(_ sender: Any) {
-//        print("edit pressed");
-//        print(hintViewBottomConstraint!)
         editMode = !editMode
         updateUI()
     }

@@ -15,13 +15,6 @@ class PhotoAlbumCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool{
         didSet{
-            // TODO: ternary operator
-//            if self.isSelected {
-//                imageView.alpha = 0.5
-//            }
-//            else {
-//                imageView.alpha = 1
-//            }
             imageView.alpha = isSelected ? 0.5 : 1
         }
     }

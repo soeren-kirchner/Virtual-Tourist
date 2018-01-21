@@ -78,27 +78,12 @@ class PhotoAlbumViewController: UIViewController {
         updateUI()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        setSelfDarkMode()
-//    }
-    
     // MARK: Helper
     
     private func updateUI() {
         setDarkMode()
         visualEffectView.effect = UIBlurEffect(style: isDarkMode() ? .dark : .light)
         bottomButton.setTitleColor(isDarkMode() ? .darkBarTint : .lightBarTint, for: .normal)
-//        if isDarkMode() {
-//            visualEffectView.effect = UIBlurEffect(style: .dark)
-//            bottomButton.setTitleColor(.darkBarTint, for: .normal)
-//            print("dark")
-//        }
-//        else {
-//            visualEffectView.effect = UIBlurEffect(style: .light)
-//            bottomButton.setTitleColor(.lightBarTint, for: .normal)
-//            print("light")
-//        }
     }
     
     private func initCollectionView() {
