@@ -20,14 +20,14 @@ class LanguageSelectionTableViewController: UITableViewController {
         Language(name: "עברית‬", englishName: "Hebrew", code: "he")
     ]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
+//
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//    }
+//
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,5 +74,4 @@ class LanguageSelectionTableViewController: UITableViewController {
         }
         return nil
     }
- 
 }

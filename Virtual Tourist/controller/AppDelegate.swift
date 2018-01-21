@@ -17,17 +17,17 @@ typealias ParametersArray = [String:AnyObject]
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let stack = CoreDataStack.shared
+ //   let stack = CoreDataStack.shared
   
-    fileprivate func saveContext() {
-        print("try to save context")
-        do {
-            try stack.saveContext()
-        }
-        catch {
-            print("error")
-        }
-    }
+//    fileprivate func saveContext() {
+//        print("try to save context")
+//        do {
+//            try stack.saveContext()
+//        }
+//        catch {
+//            print("error")
+//        }
+//    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        Settings.shared.set("de")
 //        print(Settings.shared.preferredLanguage)
         
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        print(paths[0])
+//        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//        print(paths[0])
         
         //preloadData()
         
@@ -47,14 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func preloadData() {
-        do {
-            try stack.dropAllData()
-        }
-        catch {
-            print("unable to drop all data from stack")
-        }
-    }
+//    func preloadData() {
+//        do {
+//            try stack.dropAllData()
+//        }
+//        catch {
+//            print("unable to drop all data from stack")
+//        }
+//    }
     
     
 }

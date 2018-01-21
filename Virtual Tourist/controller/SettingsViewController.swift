@@ -32,12 +32,13 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         initValues()
     }
     
     @IBAction func deleteAll(_ sender: Any) {
-        showOkayCancel(title: "Delete all Data", question: "Are you sure to delete all your content") { (okay) in
+        showOkayCancel(title: NSLocalizedString("Delete all Data", comment: "Delete all Data"), question: NSLocalizedString("Are you sure to delete all your content", comment: "Are you sure to delete all your content")) { (okay) in
             if okay {
                 try? self.stack.dropAllData()
             }
@@ -48,5 +49,4 @@ class SettingsViewController: UITableViewController {
         UserDefaults.standard.set(darkModeSwitch.isOn, forKey: UserDefaults.SettingsKeys.darkmode)
         setDarkMode()
     }
-
 }

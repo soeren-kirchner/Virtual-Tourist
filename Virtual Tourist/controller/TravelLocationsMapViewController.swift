@@ -20,9 +20,7 @@ class TravelLocationsMapViewController: UIViewController {
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
-    
     @IBOutlet weak var hintLabel: UILabel!
-    
     @IBOutlet weak var hintViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     
@@ -32,25 +30,32 @@ class TravelLocationsMapViewController: UIViewController {
     
     var editMode: Bool = false
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Pin> = fetchResults()
+    lazy var fetchedResultsController: NSFetchedResultsController<Pin> = initFetchedResultsController()
     
-    private func fetchResults() -> NSFetchedResultsController<Pin> {
-        print("fetchedResultsController: initializing my lazy self")
-        
+    private func initFetchedResultsController() -> NSFetchedResultsController<Pin> {
+
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         fetchRequest.sortDescriptors = []
-        //fetchRequest.predicate = NSPredicate(format: "pin = %@", argumentArray: [pin!])
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-        //fetchedResultsController.delegate = self
-        
+//
+//        // TODO: Eooro handling
+//        do {
+//            try fetchedResultsController.performFetch()
+//        } catch let error as NSError {
+//            print("Fetching error: \(error), \(error.userInfo)")
+//        }
+//
+        return fetchedResultsController
+    }
+    
+    fileprivate func fetchResults() {
         do {
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
+            showAlert(title: NSLocalizedString("ERROR", comment: "ERROR"), alert: NSLocalizedString("An Error occured while loading data", comment: "Error Message for the user when the App cannot fetch data"))
         }
-        
-        return fetchedResultsController
     }
     
     override func viewDidLoad() {
@@ -58,6 +63,7 @@ class TravelLocationsMapViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         mapView.delegate = self
+        //fetchResults()
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(press:)))
         longPressGestureRecognizer.minimumPressDuration = 1.0
@@ -66,7 +72,6 @@ class TravelLocationsMapViewController: UIViewController {
         
         locationManager.requestAlwaysAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            print("location service is enabled")
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
@@ -74,35 +79,53 @@ class TravelLocationsMapViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        setSelfDarkMode()
+        updateDarkMode()
         updateUI()
-        mapView.showsUserLocation = true
-        mapView.removeAnnotations(mapView.annotations)
+        //mapView.showsUserLocation = true
+        //mapView.removeAnnotations(mapView.annotations)
         fetchStoredAnnotations()
     }
     
+//    private func updateMapView() {
+//        print("will update map")
+//        print("delete all annotation")
+//        mapView.removeAnnotations(mapView.annotations)
+//        for pin in fetchedResultsController.fetchedObjects! {
+//            print(pin)
+//            let annontation = VirtualTouristAnnotation(pin: pin)
+//            mapView.addAnnotation(annontation)
+//        }
+//    }
+    
     private func fetchStoredAnnotations() {
-        print("fetchStoredAnnotations:")
-        for pin in fetchedResultsController.fetchedObjects! {
-            print(pin)
-            let annontation = VirtualTouristAnnotation(pin: pin)
-            mapView.addAnnotation(annontation)
+        //try? fetchedResultsController.performFetch()
+        fetchResults()
+        let diff = (CLLocationManager.authorizationStatus().rawValue > CLAuthorizationStatus.authorizedAlways.rawValue) ? 1 : 0
+        if mapView.annotations.count==0 || mapView.annotations.count != fetchedResultsController.fetchedObjects!.count+diff {
+            mapView.removeAnnotations(mapView.annotations)
+            for pin in fetchedResultsController.fetchedObjects! {
+//                let annontation = VirtualTouristAnnotation(pin: pin)
+//                mapView.addAnnotation(annontation)
+                mapView.addAnnotation(VirtualTouristAnnotation(pin: pin))
+            }
         }
     }
     
-    private func setSelfDarkMode() {
+    // TODO: Merge setSelfDarkMode and update UI
+    private func updateDarkMode() {
         setDarkMode()
-        if isDarkMode() {
-            visualEffectView.effect = UIBlurEffect(style: .dark)
-            print("dark")
-        }
-        else {
-            visualEffectView.effect = UIBlurEffect(style: .light)
-            print("light")
-        }
+//        if isDarkMode() {
+//            visualEffectView.effect = UIBlurEffect(style: .dark)
+//        }
+//        else {
+//            visualEffectView.effect = UIBlurEffect(style: .light)
+//        }
+        visualEffectView.effect = UIBlurEffect(style: isDarkMode() ? .dark : .light)
     }
 
     private func updateUI() {
+//        hintViewBottomConstraint.constant = editMode ? 0 : -50
+//        editButton.title = editMode ? NSLocalizedString("Done", comment: "done - button in navigation bar") : NSLocalizedString("Edit", comment: "edit - button in navigation bar")
         if editMode {
             hintViewBottomConstraint.constant = 0
             editButton.title = NSLocalizedString("Done", comment: "done - button in navigation bar")
@@ -144,22 +167,18 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if annotation is MKUserLocation {
-            return nil
-        }
-        
+        if annotation is MKUserLocation { return nil }
+
         let reusableMarkerIdentifier = "VirtualLocation"
         var markerView = mapView.dequeueReusableAnnotationView(withIdentifier: reusableMarkerIdentifier) as? VirtualTouristAnnotationView
         if markerView == nil {
             markerView = VirtualTouristAnnotationView(annotation: nil, reuseIdentifier: reusableMarkerIdentifier)
         }
-
         markerView?.annotation = annotation
         return markerView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
         if let annotation = view.annotation as? VirtualTouristAnnotation {
             if (editMode) {
                 stack.context.delete(annotation.pin)

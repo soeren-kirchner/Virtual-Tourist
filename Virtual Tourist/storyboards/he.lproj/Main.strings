@@ -1,8 +1,14 @@
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "ITf-JZ-F98"; */
+"ITf-JZ-F98.headerTitle" = "איפוס";
+
 /* Class = "UILabel"; text = "Dark Mode"; ObjectID = "L5f-jA-5cd"; */
 "L5f-jA-5cd.text" = "מצב כהה";
 
 /* Class = "UITableViewSection"; headerTitle = "Theme"; ObjectID = "OmX-Qs-ZKN"; */
 "OmX-Qs-ZKN.headerTitle" = "נושא";
+
+/* Class = "UIBarButtonItem"; title = "Settings"; ObjectID = "PoO-Qx-ULl"; */
+"PoO-Qx-ULl.title" = "הגדרות";
 
 /* Class = "UITableViewController"; title = "Language"; ObjectID = "Szg-p8-5i8"; */
 "Szg-p8-5i8.title" = "שפה";
@@ -10,9 +16,18 @@
 /* Class = "UINavigationItem"; title = "Virtual Tourist"; ObjectID = "fuj-5w-eag"; */
 "fuj-5w-eag.title" = "תייר וירטואלי";
 
+/* Class = "UIViewController"; title = "Impressions"; ObjectID = "gR8-L2-Zmw"; */
+"gR8-L2-Zmw.title" = "תמונות";
+
 /* Class = "UITableViewController"; title = "Settings"; ObjectID = "goc-Vj-fRh"; */
 "goc-Vj-fRh.title" = "הגדרות";
 
+/* Class = "UILabel"; text = "Tap Pins to Delete"; ObjectID = "hhn-0j-5vV"; */
+"hhn-0j-5vV.text" = "סימון הפין לצורך מחיקה";
+
 /* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "oRc-pf-yl0"; */
 "oRc-pf-yl0.headerTitle" = "שפה";
+
+/* Class = "UIButton"; normalTitle = "Delete all Data"; ObjectID = "usO-0g-tsw"; */
+"usO-0g-tsw.normalTitle" = "מחיקת כל התוכן";
 

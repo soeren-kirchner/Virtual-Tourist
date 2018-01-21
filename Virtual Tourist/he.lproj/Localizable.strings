@@ -1,3 +1,27 @@
-/* Navbar Title - Virtual Tourist */
-"Virtual Tourist" = "תייר וירטואלי";
+/* Error Message for the user when the App cannot store data */
+"An Error occured while storing data" = "שגיאה הופיעה בעת שמירת התוכן";
+
+/* cancel */
+"Cancel" = "ביטול";
+
+/* done - button in navigation bar */
+"Done" = "סיום";
+
+/* ERROR */
+"ERROR" = "שגיאה";
+
+/* edit - button in navigation bar */
+"Edit" = "ערוך";
+
+/* Label for Button at bottom of Photo Album Collection */
+"New Collection" = "אוסף חדש";
+
+/* okay */
+"OK" = "אישור";
+
+/* Label for Button at bottom of Photo Album Collection View */
+"Remove Selected Pictures" = "הסר תמונות נבחרות";
+
+/* Title for restart dialog */
+"Restart" = "התחל מחדש";
 

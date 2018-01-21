@@ -22,6 +22,7 @@ extension FlickrClient {
                           FlickrClient.URLParameterKeys.Longitude: String(pin.longitude),
                           FlickrClient.URLParameterKeys.Latitude: String(pin.latitude)]
         
+        // get pages count for random page
         taskForGETAndPOST("", parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
@@ -39,15 +40,16 @@ extension FlickrClient {
 
             parameters[FlickrClient.URLParameterKeys.Page] = String(self.getRandomPage(maxPage: pages))
             
+            // download random page
             self.taskForGETAndPOST("", parameters: parameters as ParametersArray) { (results, error) in
                 
                 guard error == nil else {
                     completionHandler(nil, error)
                     return
                 }
-                
-                print(results!)
-                
+//
+//                print(results!)
+//
                 guard
                     let photosDictionary = results?.value(forKey: "photos") as? JSONDictionary,
                     let photosArray = photosDictionary["photo"] as? JSONArray
@@ -57,18 +59,18 @@ extension FlickrClient {
                 }
                 
                 for item in photosArray {
-                    
-                    print(item)
-                    
+//
+//                    print(item)
+//
                     guard let imageUrl = item[FlickrClient.URLParameterValues.URLMediumPhoto] as? String else {
                         return
                     }
                     
                     let impression = Impression(url: URL(string: imageUrl)!, context: self.stack.context)
                     impression.pin = pin
-                    
-                    print(pin.impressions!.count)
-                    
+//                    
+//                    print(pin.impressions!.count)
+//                    
                 }
                 
                 completionHandler(results, nil)

@@ -35,11 +35,11 @@ class PhotoAlbumViewController: UIViewController {
     let stack = CoreDataStack.shared
     let flickrClient = FlickrClient.shared
 
-    lazy var fetchedResultsController: NSFetchedResultsController<Impression> = fetchResults()
+    lazy var fetchedResultsController: NSFetchedResultsController<Impression> = initFetchedResultsController()
     var operationsQueue = [BlockOperation]()
 
-    private func fetchResults() -> NSFetchedResultsController<Impression> {
-        print("fetchedResultsController: initializing my lazy self")
+    private func initFetchedResultsController() -> NSFetchedResultsController<Impression> {
+        //print("fetchedResultsController: initializing my lazy self")
         
         let fetchRequest: NSFetchRequest<Impression> = Impression.fetchRequest()
         fetchRequest.sortDescriptors = []
@@ -48,16 +48,17 @@ class PhotoAlbumViewController: UIViewController {
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
+        return fetchedResultsController
+    } 
+    
+    fileprivate func fetchResults() {
         do {
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
+            showAlert(title: NSLocalizedString("ERROR", comment: "ERROR"), alert: NSLocalizedString("An Error occured while loading data", comment: "Error Message for the user when the App cannot fetch data"))
         }
-        
-        return fetchedResultsController
     }
-    
-    // MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,30 +67,38 @@ class PhotoAlbumViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        fetchResults()
+        
         initCollectionView()
         initMapView()
-        setSelfDarkMode()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setSelfDarkMode()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUI()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        setSelfDarkMode()
+//    }
     
     // MARK: Helper
     
-    private func setSelfDarkMode() {
+    private func updateUI() {
         setDarkMode()
-        if isDarkMode() {
-            visualEffectView.effect = UIBlurEffect(style: .dark)
-            bottomButton.setTitleColor(.darkBarTint, for: .normal)
-            print("dark")
-        }
-        else {
-            visualEffectView.effect = UIBlurEffect(style: .light)
-            bottomButton.setTitleColor(.lightBarTint, for: .normal)
-            print("light")
-        }
+        visualEffectView.effect = UIBlurEffect(style: isDarkMode() ? .dark : .light)
+        bottomButton.setTitleColor(isDarkMode() ? .darkBarTint : .lightBarTint, for: .normal)
+//        if isDarkMode() {
+//            visualEffectView.effect = UIBlurEffect(style: .dark)
+//            bottomButton.setTitleColor(.darkBarTint, for: .normal)
+//            print("dark")
+//        }
+//        else {
+//            visualEffectView.effect = UIBlurEffect(style: .light)
+//            bottomButton.setTitleColor(.lightBarTint, for: .normal)
+//            print("light")
+//        }
     }
     
     private func initCollectionView() {
@@ -122,9 +131,7 @@ class PhotoAlbumViewController: UIViewController {
             for result in fetchedResultsController.fetchedObjects! {
                 self.stack.context.delete(result)
             }
-            
             saveContext()
-            
             flickrClient.getImpressions(forPin: pin!) { (result, error) in
                 
                 guard error == nil else {
@@ -132,7 +139,8 @@ class PhotoAlbumViewController: UIViewController {
                     return
                 }
                 self.saveContext()
-                try? self.fetchedResultsController.performFetch()
+//                try? self.fetchedResultsController.performFetch()
+                self.fetchResults()
             }
         }
     }
@@ -155,7 +163,6 @@ extension PhotoAlbumViewController: MKMapViewDelegate {
         markerView?.annotation = annotation
         return markerView
     }
-    
 }
 
 extension PhotoAlbumViewController: UICollectionViewDelegate {
