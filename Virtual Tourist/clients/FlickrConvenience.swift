@@ -47,9 +47,7 @@ extension FlickrClient {
                     completionHandler(nil, error)
                     return
                 }
-//
-//                print(results!)
-//
+
                 guard
                     let photosDictionary = results?.value(forKey: "photos") as? JSONDictionary,
                     let photosArray = photosDictionary["photo"] as? JSONArray
@@ -59,20 +57,15 @@ extension FlickrClient {
                 }
                 
                 for item in photosArray {
-//
-//                    print(item)
-//
+
                     guard let imageUrl = item[FlickrClient.URLParameterValues.URLMediumPhoto] as? String else {
                         return
                     }
                     
                     let impression = Impression(url: URL(string: imageUrl)!, context: self.stack.context)
                     impression.pin = pin
-//                    
-//                    print(pin.impressions!.count)
-//                    
                 }
-                
+             
                 completionHandler(results, nil)
             }
         }
