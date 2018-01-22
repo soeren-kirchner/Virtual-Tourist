@@ -1,3 +1,36 @@
-/* Navbar Title - Virtual Tourist */
-"Virtual Tourist" = "Virtueller Tourist";
+/* Error Message for the user when the App cannot fetch data */
+"An Error occured while loading data" = "Es ist ein Fehler beim Laden der Daten aufgetreten";
+
+/* Error Message for the user when the App cannot store data */
+"An Error occured while storing data" = "Es ist ein Fehler beim Speichern der Daten aufgetreten";
+
+/* Are you sure to delete all your content */
+"Are you sure to delete all your content" = "Sind Sie sicher? Alle Daten werden gelöscht.";
+
+/* cancel */
+"Cancel" = "Abbrechen";
+
+/* Delete all Data */
+"Delete all Data" = "alle Daten löschen";
+
+/* done - button in navigation bar */
+"Done" = "fertig";
+
+/* ERROR */
+"ERROR" = "Fehler";
+
+/* edit - button in navigation bar */
+"Edit" = "bearbeiten";
+
+/* Label for Button at bottom of Photo Album Collection */
+"New Collection" = "Neue Sammlung";
+
+/* okay */
+"OK" = "OK";
+
+/* Label for Button at bottom of Photo Album Collection View */
+"Remove Selected Pictures" = "ausgewählte Bilder löschen";
+
+/* Title for restart dialog */
+"Restart" = "Neustart";
 

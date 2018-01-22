@@ -87,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1132E586201622A100E82198 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				119FE86D1FFFE292009888E5 /* VirtualTouristAnnotationView.swift */,
+				1113310B1FF9584E0010BF2D /* VirtualTouristAnnotation.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		115C9B4F1FF2DF0F0022DEB4 /* clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,10 +134,8 @@
 			children = (
 				11D223BA1FDC42330031A74D /* AppDelegate.swift */,
 				11D223BC1FDC42330031A74D /* TravelLocationsMapViewController.swift */,
-				119FE86D1FFFE292009888E5 /* VirtualTouristAnnotationView.swift */,
 				11A5181E1FF9AB1C0047B73B /* PhotoAlbumViewController.swift */,
 				11A518201FF9B5510047B73B /* PhotoAlbumCollectionViewCell.swift */,
-				1113310B1FF9584E0010BF2D /* VirtualTouristAnnotation.swift */,
 				117F1BCC1FDD871E00D5040E /* SettingsViewController.swift */,
 				117F1BCE1FDD8E9600D5040E /* LanguageSelectionTableViewController.swift */,
 				119A2F6C1FDDDB35000CF7A7 /* LanguageSelectionTableViewCell.swift */,
@@ -159,8 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				115C9B4F1FF2DF0F0022DEB4 /* clients */,
-				119A2F6B1FDDDB00000CF7A7 /* controller */,
 				119A2F691FDDDAA7000CF7A7 /* model */,
+				119A2F6B1FDDDB00000CF7A7 /* controller */,
+				1132E586201622A100E82198 /* view */,
 				119A2F6A1FDDDACA000CF7A7 /* storyboards */,
 				114CC13C1FDCA0E8009882E3 /* Assets.xcassets */,
 				119A2F701FDDFC26000CF7A7 /* Colors.xcassets */,

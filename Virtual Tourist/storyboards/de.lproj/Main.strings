@@ -1,6 +1,33 @@
-/* Class = "UILabel"; text = "English"; ObjectID = "Lbd-Sm-Vht"; */
-"Lbd-Sm-Vht.text" = "Virtueller Tourist";
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "ITf-JZ-F98"; */
+"ITf-JZ-F98.headerTitle" = "Zurücksetzen";
+
+/* Class = "UILabel"; text = "Dark Mode"; ObjectID = "L5f-jA-5cd"; */
+"L5f-jA-5cd.text" = "Dunkler Modus";
+
+/* Class = "UITableViewSection"; headerTitle = "Theme"; ObjectID = "OmX-Qs-ZKN"; */
+"OmX-Qs-ZKN.headerTitle" = "Design";
+
+/* Class = "UIBarButtonItem"; title = "Settings"; ObjectID = "PoO-Qx-ULl"; */
+"PoO-Qx-ULl.title" = "Einstellungen";
+
+/* Class = "UITableViewController"; title = "Language"; ObjectID = "Szg-p8-5i8"; */
+"Szg-p8-5i8.title" = "Sprache";
 
 /* Class = "UINavigationItem"; title = "Virtual Tourist"; ObjectID = "fuj-5w-eag"; */
 "fuj-5w-eag.title" = "Virtueller Tourist";
+
+/* Class = "UIViewController"; title = "Impressions"; ObjectID = "gR8-L2-Zmw"; */
+"gR8-L2-Zmw.title" = "Eindrücke";
+
+/* Class = "UITableViewController"; title = "Settings"; ObjectID = "goc-Vj-fRh"; */
+"goc-Vj-fRh.title" = "Einstellungen";
+
+/* Class = "UILabel"; text = "Tap Pins to Delete"; ObjectID = "hhn-0j-5vV"; */
+"hhn-0j-5vV.text" = "Pin drücken zum Löschen";
+
+/* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "oRc-pf-yl0"; */
+"oRc-pf-yl0.headerTitle" = "Sprache";
+
+/* Class = "UIButton"; normalTitle = "Delete all Data"; ObjectID = "usO-0g-tsw"; */
+"usO-0g-tsw.normalTitle" = "alle Daten löschen";
 
