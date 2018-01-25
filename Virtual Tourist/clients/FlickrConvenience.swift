@@ -38,7 +38,7 @@ extension FlickrClient {
                     return
             }
 
-            parameters[FlickrClient.URLParameterKeys.Page] = String(self.getRandomPage(maxPage: pages))
+            parameters[FlickrClient.URLParameterKeys.Page] = String(self.getRandomPage(maxPage: min(pages,4000/Int(Constants.imagesPerGallery))))
             
             // download random page
             self.taskForGETAndPOST("", parameters: parameters as ParametersArray) { (results, error) in

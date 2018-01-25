@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTM-Jz-APs">
-                                <rect key="frame" x="0.0" y="623" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="573" width="375" height="50"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Z88-mV-JwQ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -50,7 +50,7 @@
                             <constraint firstAttribute="bottom" secondItem="SWb-wx-dle" secondAttribute="bottom" id="6iZ-hm-yP7"/>
                             <constraint firstItem="XTM-Jz-APs" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="B8Y-nY-kKf"/>
                             <constraint firstItem="XTM-Jz-APs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ttx-Hz-hHc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XTM-Jz-APs" secondAttribute="bottom" constant="-50" id="Vtq-B0-M5u"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XTM-Jz-APs" secondAttribute="bottom" id="Vtq-B0-M5u"/>
                             <constraint firstItem="SWb-wx-dle" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aHf-cr-cha"/>
                             <constraint firstItem="SWb-wx-dle" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dpV-sY-NKB"/>
                             <constraint firstItem="SWb-wx-dle" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hq4-aU-snE"/>
@@ -74,7 +74,6 @@
                     <connections>
                         <outlet property="editButton" destination="kS7-2A-1Tk" id="AK2-5r-6x1"/>
                         <outlet property="hintLabel" destination="hhn-0j-5vV" id="wfe-fV-spX"/>
-                        <outlet property="hintViewBottomConstraint" destination="Vtq-B0-M5u" id="u0f-Mz-Qus"/>
                         <outlet property="mapView" destination="SWb-wx-dle" id="uYc-ND-7FM"/>
                         <outlet property="visualEffectView" destination="XTM-Jz-APs" id="pHC-RN-ZxQ"/>
                         <segue destination="gR8-L2-Zmw" kind="show" identifier="PhotoAlbumSegue" id="u9P-qo-a7X"/>

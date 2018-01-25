@@ -21,7 +21,6 @@ class TravelLocationsMapViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     @IBOutlet weak var hintLabel: UILabel!
-    @IBOutlet weak var hintViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
@@ -94,12 +93,11 @@ class TravelLocationsMapViewController: UIViewController {
     }
 
     private func updateUI() {
+        visualEffectView.isHidden = !editMode
         if editMode {
-            hintViewBottomConstraint.constant = 0
             editButton.title = NSLocalizedString("Done", comment: "done - button in navigation bar")
         }
         else {
-            hintViewBottomConstraint.constant = -50
             editButton.title = NSLocalizedString("Edit", comment: "edit - button in navigation bar")
         }
     }
